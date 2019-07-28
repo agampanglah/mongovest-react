@@ -7,6 +7,8 @@ import Login from './components/auth/Login';
 import Register from './components/auth/Register';
 import Mainpage from './components/Mainpage';
 import Productdetail from './components/Productdetail';
+import Profile from './components/UserProfile'
+import Transaction from './components/Transaction';
 
 function AppRouter() {
   return (
@@ -14,17 +16,19 @@ function AppRouter() {
       <div>
 
         <Switch>
-          <Route exact path='/'component = {Homepage}/>
-          <Route path = '/login' component = {Login} />
+          <Route exact path='/'component ={Homepage}/>
+          <Route path = '/login' component ={Login} />
           <Route path ='/register' component={Register}/>
-          </Switch>
+        </Switch>
           
-         
-          <Route  path ='/mainpage' component ={Mainpage}/>
-           
+         <Switch>
+           <Route exact path ='/mainpage' component ={Mainpage}/>
            <Route path ='/mainpage/:product_id' component={Mainpage} /> 
-           <Route path = '/productdetail/:product_id' component ={Productdetail} />
-         
+           <Route path ='/productdetail/:product_id' component = {Productdetail} />
+
+           <Route path ={`/profile/${localStorage.getItem('USER_ID')}`} component = {Profile} /> 
+           <Route pat = '/transaction' component={Transaction}/>
+           </Switch>
 
 {/* page detail by id route */}
         

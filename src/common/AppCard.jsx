@@ -14,7 +14,7 @@ import {Link } from 'react-router-dom';
               <CardBody>
                 <CardTitle>{this.props.title}</CardTitle>
                 <CardSubtitle>{this.props.harga}</CardSubtitle>
-                 <Button> <Link to = '/login'> <a > lihat </a></Link></Button> 
+                <Link to={`/productdetail/${this.props.product_id}`}> lihat detail</Link>
               </CardBody>
             </Card>
           

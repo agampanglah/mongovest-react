@@ -23,6 +23,15 @@
     background-color: aqua;
 }
 
-.column-body{
+.card {
+    padding-top: 30px;
+}
+
+.card-flex{
+    display: flex
     
+}
+
+.card-prod{
+    padding-top: 60px;
 }

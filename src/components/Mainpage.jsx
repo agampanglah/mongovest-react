@@ -29,26 +29,30 @@ class Mainpage extends Component {
     render() {
 
         console.log('ini data dari product', this.state.product)
+
         return (
             <div>
 
                 <AppHeader />
-                <h1 style={{ textAlign: 'center' }} >Mudah BerInvestasi </h1>
+                <Col>
+                <h1 style={{ textAlign: 'center' }} >Product Terbaru </h1>
+                </Col>
+              
 
                 <div>
 
-                    <Row>
-                        <Col className='d-flex'>
+                    <Row className ="card" >
+                        <Col className ="card-flex" >
                             {
-                                this.state.product.map(prod =>
+                                this.state.product.slice(0,3).map(prod =>
 
-                                    <Col md='4' key={prod.product_id} >
+                                    <Col  md='4' key={prod.product_id} >
 
                                         <Card >
                                             <CardImg top width="100%" src={prod.foto} alt="Card image cap" />
                                             <CardBody>
                                                 <CardTitle>{prod.nama_product}</CardTitle>
-                                                <CardSubtitle>{prod.price}</CardSubtitle>
+                                                <CardSubtitle> Rp.{prod.price}</CardSubtitle>
                                                 <CardText></CardText>
                                                 <Link to={`/productdetail/${prod.product_id}`}> lihat detail</Link>
                                             </CardBody>
@@ -61,7 +65,31 @@ class Mainpage extends Component {
                     </Row>
                 </div>
 
+                    <div>
+                        <h2 style={{ textAlign: 'center' }} >semua product investasi</h2>
+                    <Row>
+                        <Col className='d-flex'>
+                            {
+                                this.state.product.slice(4).map(loadmore =>
 
+                                    <Col md='6' key={loadmore.product_id} >
+
+                                        <Card >
+                                            <CardImg top width="100%" src={loadmore.foto} alt="Card image cap" />
+                                            <CardBody>
+                                                <CardTitle>{loadmore.nama_product}</CardTitle>
+                                                <CardSubtitle> Rp.{loadmore.price}</CardSubtitle>
+                                                <CardText></CardText>
+                                                <Link to={`/productdetail/${loadmore.product_id}`}> lihat detail</Link>
+                                            </CardBody>
+                                        </Card>
+                                    </Col>
+                                )
+                            }
+
+                        </Col>
+                    </Row>
+                    </div>
 
             </div>
         )

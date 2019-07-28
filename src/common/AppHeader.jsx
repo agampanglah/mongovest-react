@@ -14,7 +14,7 @@ import {
 } from 'reactstrap';
 import store from 'store';
 
-import { Link } from 'react-router-dom'
+import { Link, Redirect } from 'react-router-dom'
 import IsLoggedIn from '../helpers/IsLoggedIn';
 import Axios from 'axios';
 
@@ -43,12 +43,15 @@ class AppHeader extends React.Component {
     }
 
     submitLogout() {
-        store.remove('loggedIn');
-        localStorage.removeItem('JWT_TOKEN')
-        localStorage.removeItem('USER_ID')
-        console.log('berhasil logout')
-        this.props.history.push('/')
-
+        // if(!IsLoggedIn()){
+            store.remove('loggedIn');
+            localStorage.removeItem('JWT_TOKEN')
+            localStorage.removeItem('USER_ID')
+            this.state.props.history.push('/')
+            // <Redirect to ='/'/>
+            
+        //  }
+        // <Redirect to ='/'/>
 
     }
 // get data details by id
@@ -64,7 +67,7 @@ class AppHeader extends React.Component {
                     })
                 })
                 .catch(err => {
-                    console.log(err)
+                    alert(err)
                 })
         }
     }
@@ -91,7 +94,7 @@ class AppHeader extends React.Component {
                     </DropdownItem>
                    
                     <DropdownItem>
-                    <Link to='/profile'> edit profile</Link>
+                    <Link to={`/profile/${localStorage.getItem('USER_ID')}`}> Edit Profile</Link>
                     </DropdownItem>
 
                     <DropdownItem>
