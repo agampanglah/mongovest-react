@@ -15,20 +15,22 @@ function AppRouter() {
     <BrowserRouter>
       <div>
 
-        <Switch>
+      <Switch>
           <Route exact path='/'component ={Homepage}/>
           <Route path = '/login' component ={Login} />
           <Route path ='/register' component={Register}/>
-        </Switch>
+      </Switch>
           
-         <Switch>
+      <Switch>
            <Route exact path ='/mainpage' component ={Mainpage}/>
            <Route path ='/mainpage/:product_id' component={Mainpage} /> 
            <Route path ='/productdetail/:product_id' component = {Productdetail} />
-
            <Route path ={`/profile/${localStorage.getItem('USER_ID')}`} component = {Profile} /> 
-           <Route pat = '/transaction' component={Transaction}/>
-           </Switch>
+           <Route path = '/transaction' component={Transaction}/>
+           <Route path = '/mainpage/login' component ={Login} />
+      </Switch>
+
+
 
 {/* page detail by id route */}
         

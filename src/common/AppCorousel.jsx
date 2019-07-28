@@ -22,17 +22,17 @@ class AppCarousel extends React.Component {
           activeIndex: 0,
           items : [
             {
-              src: 'https://res.cloudinary.com/monggovestplus/image/upload/v1551761938/Image.jpg',
+              src: 'http://singlestickers.com/wp-content/uploads/2018/12/angus-cattle-clipart-beef-silhouette-wildlife-grass-black-cow-vector.jpg',
               altText: <h1> sapi endas mu</h1>,
-              caption: <text className="text-banner caption">Kelola keuangan anda dengan instrumen investasi yang terjangkau dan rendah resiko</text>
+              caption: <text className="text-banner caption " >Kelola keuangan anda dengan instrumen investasi yang terjangkau dan rendah resiko</text>
             },
             {
-              src: 'https://res.cloudinary.com/monggovestplus/image/upload/v1551761938/Image.jpg',
+              src: 'http://singlestickers.com/wp-content/uploads/2018/12/angus-cattle-clipart-beef-silhouette-wildlife-grass-black-cow-vector.jpg',
               altText: 'Sapi kebo',
               caption: 'sapi betina'
             },
             {
-              src: 'https://res.cloudinary.com/monggovestplus/image/upload/v1551761938/Image.jpg',
+              src: 'http://singlestickers.com/wp-content/uploads/2018/12/angus-cattle-clipart-beef-silhouette-wildlife-grass-black-cow-vector.jpg',
               altText: 'sapi export',
               caption: 'sapi shemale'
             }
@@ -78,7 +78,7 @@ class AppCarousel extends React.Component {
         const slides = this.state.items.map((item) => {
           return (
             
-            <CarouselItem 
+            <CarouselItem
               onExiting={this.onExiting}
               onExited={this.onExited}
               key={item.altText}
@@ -94,7 +94,7 @@ class AppCarousel extends React.Component {
 
       
 <div>          
-        
+        <Container >
   
           <Carousel 
             activeIndex={activeIndex}
@@ -107,7 +107,7 @@ class AppCarousel extends React.Component {
             <CarouselControl direction="next" directionText="Next" onClickHandler={this.next} />
           </Carousel> 
         
- 
+          </Container>
           </div>
          
         );

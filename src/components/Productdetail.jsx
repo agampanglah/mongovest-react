@@ -39,6 +39,7 @@ class Productdetail extends React.Component {
             prod: [],
             modal: false,
             activeTab: '1',
+            lot : '',
 
 
 
@@ -66,7 +67,7 @@ class Productdetail extends React.Component {
 
 
     handlercangeLot(e) {
-        this.setState({ totalLot: e.target.value })
+        this.setState({ lot: e.target.value })
     }
 
     toggle() {
@@ -86,10 +87,10 @@ class Productdetail extends React.Component {
     render() {
 
         console.log('detail product')
+        const lot = this.state.lot
         const prod  = this.state.prod
         const harga = this.state.prod.price
-        // const lot  
-        const hargaTotal = (harga * 20)
+        const hargaTotal = (harga * lot)
         console.log(hargaTotal, 'harga total')
 
         let go = <Link to={`/transaction/${this.state.prod.product_id}`}> Proses</Link>
@@ -170,8 +171,8 @@ class Productdetail extends React.Component {
                                                     <Input
                                                         // id='lotInput'
                                                         type='number'
-                                                        placeholder='1'
-                                                        value={this.state.totalLot}
+                                                        placeholder='0'
+                                                        value={this.state.lot}
                                                         onChange={this.handlercangeLot}
                                                     >
 

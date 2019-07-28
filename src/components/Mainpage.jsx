@@ -4,8 +4,9 @@ import {
     Card, CardImg, CardBody,
     CardTitle, CardSubtitle, Button, CardText, Container, Row, Col
 } from 'reactstrap';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import Axios from 'axios';
+import IsLoggedIn from '../helpers/IsLoggedIn';
 
 Axios.defaults.baseURL = 'https://binarplus-product-monggovest.herokuapp.com'
 
@@ -22,31 +23,35 @@ class Mainpage extends Component {
             .get('/product')
             .then(ress => {
                 this.setState({ product: ress.data });
-                console.log('data product', ress.data)
+                console.log('data product dari axios', ress.data)
             })
     }
 
     render() {
 
-        console.log('ini data dari product', this.state.product)
+        if(!IsLoggedIn()){
+            return <Redirect to = '/' />
+        }
+
+        console.log('data product di render', this.state.product)
 
         return (
             <div>
 
                 <AppHeader />
                 <Col>
-                <h1 style={{ textAlign: 'center' }} >Product Terbaru </h1>
+                    <h1 style={{ textAlign: 'center' }} >Product Terbaru </h1>
                 </Col>
-              
+
 
                 <div>
 
-                    <Row className ="card" >
-                        <Col className ="card-flex" >
+                    <Row className="card" >
+                        <Col className="card-flex" >
                             {
-                                this.state.product.slice(0,3).map(prod =>
+                                this.state.product.slice(0, 3).map(prod =>
 
-                                    <Col  md='4' key={prod.product_id} >
+                                    <Col md='4' key={prod.product_id} >
 
                                         <Card >
                                             <CardImg top width="100%" src={prod.foto} alt="Card image cap" />
@@ -65,8 +70,8 @@ class Mainpage extends Component {
                     </Row>
                 </div>
 
-                    <div>
-                        <h2 style={{ textAlign: 'center' }} >semua product investasi</h2>
+                <div>
+                    <h2 style={{ textAlign: 'center' }} >semua product investasi</h2>
                     <Row>
                         <Col className='d-flex'>
                             {
@@ -89,7 +94,7 @@ class Mainpage extends Component {
 
                         </Col>
                     </Row>
-                    </div>
+                </div>
 
             </div>
         )

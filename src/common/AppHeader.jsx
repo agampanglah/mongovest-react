@@ -17,6 +17,7 @@ import store from 'store';
 import { Link, Redirect } from 'react-router-dom'
 import IsLoggedIn from '../helpers/IsLoggedIn';
 import Axios from 'axios';
+import { Button } from 'react-md';
 
 Axios.defaults.baseURL = 'https://binarplus-product-monggovest.herokuapp.com'
 
@@ -25,8 +26,10 @@ class AppHeader extends React.Component {
         super(props)
         this.state = {
         isOpen: false,
+        
             // data object user
-            user: {}
+            user: []
+            
 
         };
 
@@ -44,14 +47,12 @@ class AppHeader extends React.Component {
 
     submitLogout() {
         // if(!IsLoggedIn()){
-            store.remove('loggedIn');
-            localStorage.removeItem('JWT_TOKEN')
-            localStorage.removeItem('USER_ID')
-            this.state.props.history.push('/')
-            // <Redirect to ='/'/>
-            
-        //  }
-        // <Redirect to ='/'/>
+        store.remove('loggedIn');
+        localStorage.removeItem('JWT_TOKEN')
+        localStorage.removeItem('USER_ID')      
+        this.state.history.push('/')
+      
+       
 
     }
 // get data details by id
@@ -73,6 +74,9 @@ class AppHeader extends React.Component {
     }
 
     render() {
+
+        
+      
         //data dari user state yang sudah diambil dari component didmount
         console.log('data user', this.state.user)
 
@@ -98,7 +102,7 @@ class AppHeader extends React.Component {
                     </DropdownItem>
 
                     <DropdownItem>
-                    <NavLink> <Link onClick={this.submitLogout}> <p> logout </p></Link></NavLink>
+                    <Button color="info" onClick={this.submitLogout}> logout</Button> 
                     </DropdownItem>
 
                     <DropdownItem divider />
@@ -110,6 +114,7 @@ class AppHeader extends React.Component {
             check = <NavLink> <Link className='text-white' to='/login'> <p className="text-white" > login </p></Link></NavLink>
         }
 
+     
         return (
 
 
@@ -147,12 +152,15 @@ class AppHeader extends React.Component {
                 </Navbar>
             </div>
         );
-    }
 
+       
+    }
+   
 
 
 
 }
+
 
 
 

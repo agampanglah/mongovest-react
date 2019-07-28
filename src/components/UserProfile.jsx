@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import AppHeader from '../common/AppHeader';
 import Axios from 'axios';
 import IsLoggedIn from '../helpers/IsLoggedIn';
-import {Container, Form, FormGroup, Label, Input, Button} from 'reactstrap'
+import {Container, Form, FormGroup, Label, Input, Button, Col} from 'reactstrap'
 
 Axios.defaults.baseURL = 'https://binarplus-product-monggovest.herokuapp.com'
 
@@ -10,7 +10,7 @@ class Profile extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            // fullname: '',
+            //  fullname: '',
              datas: {}
         }
 
@@ -96,21 +96,21 @@ class Profile extends Component {
 
     render() {
         console.log('data user di userprofile', this.state.userdata)
-        const userData = this.state.userData
+        const userdata = this.state.userdata
         return (
             <div>
                 <AppHeader />
                 
             <Container>
                 <div>
-                    
-                    <h2 style={{ margin: '30px', textAlign: 'center' }}> Edit Profile</h2>
-
-                        <Form row style={{ width: '400px', margin: 'auto' }}>
+                   
+                    <h2 style={{ margin: '40px', textAlign: 'center' }}> Edit Profile</h2>
+                    <Col row>
+                        <Form row style={{ width: '500px', margin: 'auto' }}>
 
                         <FormGroup className="mb-2 mr-sm-2 mb-sm-0">
                                 <Label for="fullname" className="mr-sm-2" > fullname </Label>
-                                <Input type= "text" name="fullname" placeholder= "fullname" value={this.state.fullname} onChange={this.UpdateChange}   />
+                                <Input type= "text" name="fullname" placeholder= "fullname"value={this.state.fullname} onChange={this.UpdateChange}   />
                             </FormGroup>
 
                             <FormGroup className="mb-2 mr-sm-2 mb-sm-0">
@@ -134,10 +134,11 @@ class Profile extends Component {
                             </FormGroup>
 
                             <div className="br">
-                            <Button style={{ margin: '30px', textAlign: 'center' }}  color="info" light expand="md" onClick={this.updateHandler}>save</Button>
+                            <Button style={{ margin: '20px', textAlign: 'center' }}  color="info" light expand="md" onClick={this.updateHandler}>save</Button>
                             </div>
 
                         </Form>
+                        </Col>
                 </div>
              </Container>
                 
