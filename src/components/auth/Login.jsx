@@ -1,5 +1,5 @@
 import React from 'react';
-import { Redirect, Link } from 'react-router-dom';
+import { Redirect, Link, withRouter } from 'react-router-dom';
 import Axios from 'axios';
 import store from 'store';
 import IsLoggedIn from '../../helpers/IsLoggedIn';
@@ -100,7 +100,7 @@ class Login extends React.Component {
 
         if (IsLoggedIn()) {
             return (
-                <Redirect to='/mainpage' />
+                <Redirect to='/login' />
             )
         }
         return (

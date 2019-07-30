@@ -9,11 +9,16 @@ import Mainpage from './components/Mainpage';
 import Productdetail from './components/Productdetail';
 import Profile from './components/UserProfile'
 import Transaction from './components/Transaction';
+import Aprofile from './components/CmsAdmin'
+import UpDropzone from './components/CmsAdmin';
+import CmsAdmin from './components/CmsAdmin';
 
 function AppRouter() {
   return (
     <BrowserRouter>
       <div>
+     
+        <Route path = '/cms/admin/mainpage' component = {CmsAdmin} /> 
 
       <Switch>
           <Route exact path='/'component ={Homepage}/>
@@ -28,8 +33,10 @@ function AppRouter() {
            <Route path ={`/profile/${localStorage.getItem('USER_ID')}`} component = {Profile} /> 
            <Route path = '/transaction' component={Transaction}/>
            <Route path = '/mainpage/login' component ={Login} />
+         
       </Switch>
 
+        
 
 
 {/* page detail by id route */}

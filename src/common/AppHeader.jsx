@@ -13,8 +13,8 @@ import {
     DropdownItem
 } from 'reactstrap';
 import store from 'store';
-
-import { Link, Redirect } from 'react-router-dom'
+import Avatar from 'react-avatar';
+import { Link, Redirect,withRouter } from 'react-router-dom'
 import IsLoggedIn from '../helpers/IsLoggedIn';
 import Axios from 'axios';
 import { Button } from 'react-md';
@@ -47,10 +47,11 @@ class AppHeader extends React.Component {
 
     submitLogout() {
         // if(!IsLoggedIn()){
+        let history = this.props.history
         store.remove('loggedIn');
         localStorage.removeItem('JWT_TOKEN')
         localStorage.removeItem('USER_ID')      
-        this.state.history.push('/')
+        this.props.history.push('/')
       
        
 
@@ -82,15 +83,16 @@ class AppHeader extends React.Component {
 
         // data id yang di get dari user_id saat login
         console.log('ini id user', localStorage.getItem('USER_ID'))
-
+        // let avaLogin
         const user = this.state.user
         let check  
         let load
         if (IsLoggedIn()) {
           
             load = <UncontrolledDropdown nav inNavbar>
-                <DropdownToggle className='text-white' nav caret color="info">
-           profile
+             <DropdownToggle className='text-white' nav caret color="info">
+             <Avatar size="35" round={true} src={user.foto}>
+                </Avatar>   
                 </DropdownToggle>
                 <DropdownMenu right>
                     <DropdownItem> 
@@ -122,7 +124,7 @@ class AppHeader extends React.Component {
             <div>
 
                 <Navbar color="info" light expand="md">
-                    <NavbarBrand> <Link to='#'><img src='https://res.cloudinary.com/monggovestplus/image/upload/v1551762164/logomonggovest.png' height="35" /></Link></NavbarBrand>
+                    <NavbarBrand> <Link to='/mainpage'><img src='https://res.cloudinary.com/monggovestplus/image/upload/v1551762164/logomonggovest.png' height="35" /></Link></NavbarBrand>
 
                     <NavbarToggler onClick={this.toggle} />
                     <Collapse isOpen={this.state.isOpen} navbar>
@@ -164,4 +166,4 @@ class AppHeader extends React.Component {
 
 
 
-export default AppHeader
+export default withRouter(AppHeader) 
