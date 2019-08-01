@@ -1,12 +1,15 @@
 import React, { Component, createRef } from 'react'
 import Dropzone from 'react-dropzone'
-import AppHeader from '../common/AppHeader';
-import { Container, Col, Button, Form, FormGroup, Label, Input, FormText } from 'reactstrap';
+import AppHeader from '../../common/AppHeader';
+import { Container, Col, Button, Form, FormGroup, Label, Input, FormText,  } from 'reactstrap';
 import Axios from 'axios';
-import {withRouter} from 'react-router-dom'
+import {withRouter, Redirect} from 'react-router-dom'
+import IsLoggedIn from '../../helpers/IsLoggedIn';
+
  
 const dropzoneRef = createRef()
 
+Axios.defaults.baseURL = 'https://binarplus-product-monggovest.herokuapp.com'
 
  class Cms extends Component {
  
@@ -14,25 +17,61 @@ const dropzoneRef = createRef()
        
         super(props);
         this.state = {
-            image: '',
-            title: '',
-            content: '',
-            datasWithImg:[]
+            nama_product: '',
+            foto: '',
+            price: '',
+            image:'',
+            datasWithImg:[],
+            products:[]
         };
-        this.handleChangeTitle = this.handleChangeTitle.bind(this)
-        this.handleChangeContent= this.handleChangeContent.bind(this)
-        this.sendData = this.sendData.bind(this)
+        this.deleteProduct = this.deleteProduct.bind(this)
+        this.handleChangeNamaProduct= this.handleChangeNamaProduct.bind(this)
+        this.CreateProduct = this.CreateProduct.bind(this)
+        this.handleChangePrice=this.handleChangePrice.bind(this)
+    
     }
  
-    sendData(){
-        Axios.post('http://reduxblog.herokuapp.com/api/posts?key=testpostimages', {
-            title: this.state.title, categories: this.state.image.url, content: this.state.content
+    // create product
+    
+    CreateProduct(){
+        Axios.post('product/', {
+            nama_product: this.state.nama_product,
+            foto: this.state.image.url, 
+            price: this.state.price
         }).then(res => {
             this.setState({
                 datasWithImg: res.data
+               
             })
+            window.location.reload();
+            alert('update berhasil')
         })
     }
+
+    // to get all product
+
+    componentDidMount(){
+        Axios
+        .get('/product')
+            .then(response => {
+                this.setState({products:response.data});
+
+            })
+    }
+
+    deleteProduct = product_id => {
+        const products = [...this.state.products];
+        Axios
+            .delete(`/product/${product_id}`)
+                .then( ress =>{
+                    alert('sukses menghapus');
+                    this.setState({products:products});
+                    window.location.reload();
+                })
+                .catch(err => {
+                    console.log(err)
+                })
+    }          
  
  
     handleUploadImages = images => {
@@ -41,9 +80,9 @@ const dropzoneRef = createRef()
             // our formdata
             const formData = new FormData();
             formData.append("file", image);
-            formData.append("tags", 'TAGS'); // Add tags for the images - {Array}
-            formData.append("upload_preset", 'lx53fafb'); // Replace the preset name with your own
-            formData.append("api_key", "574962124878414"); // Replace API key with your own Cloudinary API key
+            formData.append("tags", 'FOTO_PRODUCT'); // Add tags for the images - {Array}
+            formData.append("upload_preset", 'bvebrrza'); // Replace the preset name with your own
+            formData.append("api_key", "137515633127782"); // Replace API key with your own Cloudinary API key
             formData.append("timestamp", (Date.now() / 1000) | 0);
  
             // Replace cloudinary upload URL with yours
@@ -65,16 +104,19 @@ const dropzoneRef = createRef()
         });
     }
  
-    handleChangeTitle(event) {
-        this.setState({title: event.target.value});
+    handleChangePrice(event) {
+        this.setState({price: event.target.value});
     }
  
-    handleChangeContent(event) {
-        this.setState({content: event.target.value});
+    handleChangeNamaProduct(event) {
+        this.setState({nama_product: event.target.value});
     }
  
     render() {
         console.log('images', this.state.image.url)
+        if (!IsLoggedIn()){
+            return<Redirect to ="/login" />
+        }
  
         let imageUpload
         if (this.state.image.url === undefined) {
@@ -96,33 +138,37 @@ const dropzoneRef = createRef()
         return (
             <div>
                 <AppHeader />
+
+
+                <h2 style={{ paddingTop: 30, textAlign: "center" }} >dashboard </h2>
+
                 <Container>
                     <div>
-                        <Form>
+                        <Form row style={{ width: '400px', margin: 'auto' }}>
                             <FormGroup row>
-                                <Label for="exampleEmail" sm={2}>Images</Label>
+                                <Label for="foto" sm={2}>foto</Label>
                                 <Col sm={2}>
                                     {imageUpload}
                                 </Col>
                             </FormGroup>
                             <FormGroup row>
-                                <Label for="exampleEmail" sm={2}>Title</Label>
+                                <Label for="sapi" sm={2}>nama produk</Label>
                                 <Col sm={10}>
-                                    <Input type="text" value={this.state.title} onChange={this.handleChangeTitle} placeholder="Title" />
+                                    <Input type="text" value={this.state.nama_product} onChange={this.handleChangeNamaProduct} placeholder="masukan nama product" />
                                 </Col>
                             </FormGroup>
                             <FormGroup row>
-                                <Label for="exampleText" sm={2}>Content</Label>
+                                <Label for="exampleText" sm={2}>price</Label>
                                 <Col sm={10}>
-                                    <Input type="text" value={this.state.content} onChange={this.handleChangeContent} />
+                                    <Input type="text" value={this.state.price} onChange={this.handleChangePrice} />
                                 </Col>
                             </FormGroup>
                             <Col sm={{ size: 10, offset: 2 }}>
-                                <Button onClick={this.sendData}>Submit</Button>
+                                <Button onClick={this.CreateProduct}>Submit</Button>
                             </Col>
                         </Form>
                     </div>
-                </Container>
+                </Container> 
  
             </div>
         )

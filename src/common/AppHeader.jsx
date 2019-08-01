@@ -46,13 +46,12 @@ class AppHeader extends React.Component {
     }
 
     submitLogout() {
-        // if(!IsLoggedIn()){
-        let history = this.props.history
+
         store.remove('loggedIn');
         localStorage.removeItem('JWT_TOKEN')
-        localStorage.removeItem('USER_ID')      
+        localStorage.removeItem('USER_ID')    
         this.props.history.push('/')
-      
+        alert('anda berhasil logout')  
        
 
     }

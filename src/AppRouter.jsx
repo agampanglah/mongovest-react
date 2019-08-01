@@ -9,16 +9,18 @@ import Mainpage from './components/Mainpage';
 import Productdetail from './components/Productdetail';
 import Profile from './components/UserProfile'
 import Transaction from './components/Transaction';
-import Aprofile from './components/CmsAdmin'
-import UpDropzone from './components/CmsAdmin';
-import CmsAdmin from './components/CmsAdmin';
+import Aprofile from './common/AdminBody'
+import UpDropzone from './common/AdminBody';
+import CmsAdmin from './components/admin/ProductAdmin';
+import Admin from './components/admin/'
+import HomeAdmin from './components/admin/';
 
 function AppRouter() {
   return (
     <BrowserRouter>
       <div>
      
-        <Route path = '/cms/admin/mainpage' component = {CmsAdmin} /> 
+         
 
       <Switch>
           <Route exact path='/'component ={Homepage}/>
@@ -31,13 +33,16 @@ function AppRouter() {
            <Route path ='/mainpage/:product_id' component={Mainpage} /> 
            <Route path ='/productdetail/:product_id' component = {Productdetail} />
            <Route path ={`/profile/${localStorage.getItem('USER_ID')}`} component = {Profile} /> 
-           <Route path = '/transaction' component={Transaction}/>
+           <Route path = {`/transaction/:product_id`} component={Transaction}/>
            <Route path = '/mainpage/login' component ={Login} />
-         
+           <Route path = '/cms/admin' component={HomeAdmin} />
+
       </Switch>
-
-        
-
+     
+      {/* <Switch>
+      <Route exact path = '/cms/admin' component = {HomeAdmin} />
+      </Switch> */}
+            
 
 {/* page detail by id route */}
         

@@ -64,7 +64,7 @@ class Login extends React.Component {
             .then((response) => {
                 console.log('ini function login', response);
                 if (response.status === 200) {
-
+              
                     localStorage.setItem("JWT_TOKEN", response.data.token)
                    
                     const token = localStorage.getItem('JWT_TOKEN')
@@ -74,7 +74,8 @@ class Login extends React.Component {
                     const user = JSON.parse(rawPayload);
 
                     localStorage.setItem('USER_ID', user.id)
-
+                    
+                    
                     store.set('loggedIn', true);
                     alert('selamat datang selamat berinvestasi');
                    
@@ -97,7 +98,8 @@ class Login extends React.Component {
     render() {
         console.log('id', localStorage.getItem('USER_ID'))
         // console.log(IsLoggedIn())
-
+    
+        localStorage.getItem("USER_ROLE")
         if (IsLoggedIn()) {
             return (
                 <Redirect to='/login' />
