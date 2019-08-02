@@ -66,7 +66,7 @@ class Login extends React.Component {
                 if (response.status === 200) {
               
                     localStorage.setItem("JWT_TOKEN", response.data.token)
-                   
+                    localStorage.setItem("Roles", response.data.role)
                     const token = localStorage.getItem('JWT_TOKEN')
                     const tokenParts = token.split('.');
                     const encodedPayload = tokenParts[1];
@@ -82,7 +82,11 @@ class Login extends React.Component {
                     this.props.history.push('/mainpage')
                 }
 
+              
+
             })
+                  
+
             .catch(function (error) {
                 console.log('eror login', error)
                 alert("anda belum terdaftar")
@@ -98,11 +102,13 @@ class Login extends React.Component {
     render() {
         console.log('id', localStorage.getItem('USER_ID'))
         // console.log(IsLoggedIn())
-    
-        localStorage.getItem("USER_ROLE")
-        if (IsLoggedIn()) {
+
+    let username=this.state.username
+    let password=this.state.password
+       
+        if (username === 'admin' && password==='adminadmin') {
             return (
-                <Redirect to='/login' />
+                <Redirect to='/cms/admin' />
             )
         }
         return (

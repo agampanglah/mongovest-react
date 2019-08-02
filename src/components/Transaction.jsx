@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import AppHeader from '../common/AppHeader';
-import { Col, Button, Form, FormGroup, Label, Input, Container, selectedOption, options } from 'reactstrap';
+import { Col, Button, Form, FormGroup, Label, Input, Container } from 'reactstrap';
 import Axios from 'axios';
-
+import options from '../common/AppBank'
+import Select from 'react-select';
 
 Axios.defaults.baseURL = 'https://binarplus-product-monggovest.herokuapp.com'
 
@@ -14,7 +15,8 @@ class Transaction extends Component {
         this.state = {
             prods: [],
             trxs:[],
-            users:[]
+            users:[],
+          
           
         }
 
@@ -23,9 +25,13 @@ class Transaction extends Component {
     }
 
     componentWillMount(){
-        const{match:{params}} = this.props;
+        const { match: { params } } = this.props;
             Axios
-                .get(`/`)
+                .get(`/transaction/${params.transaction_id}`)
+                    .then(response =>{
+                        this.setState({trxs: response.data})
+                        console.log(response.data,"id transaction")
+                    })
     }
 
     componentDidMount() {
@@ -40,12 +46,11 @@ class Transaction extends Component {
     }
 
     render() {
-
+        let trxs = this.state.trxs
         let prods = this.state.prods
-        // let hargatotal = localStorage.getItem("HARGA_TOTAL")
-        // let lot = localStorage.getItem("TOTAL_LOT")
         console.log(prods,'product')
-        // console.log(lot)
+        console.log(trxs,"transaction")
+        console.log(trxs,"id transaction")
      
         
         return (
@@ -88,7 +93,7 @@ class Transaction extends Component {
                                     type='text'
                                     className="form-control"
                                     value=""
-                                    // placeholder={lot}
+                                    placeholder={trxs.jumlah_lot}
                                    
 
                                 >
@@ -111,18 +116,17 @@ class Transaction extends Component {
                                 </Input>
                             </Col>
                         </FormGroup>
-
                         <FormGroup row>
-                            <Label sm={2}>Nama Bank</Label>
-                            <Col sm={10}>
-                                {/* <Select
-                  value={selectedOption}
+              <Label sm={2}>Nama Bank</Label>
+              <Col sm={10}>
+                <Select
+                //   value={selectedOption}
                   onChange={this.onBankName}
                   options={options}
                   placeholder="Pilih Bank Anda ... "
-                /> */}
-                            </Col>
-                        </FormGroup>
+                />
+              </Col>
+            </FormGroup>
 
                         <FormGroup row>
                             <Label sm={2}>Nomor Rekening</Label>

@@ -17,6 +17,7 @@
     "react-md": "^1.12.1",
     "react-router-dom": "^5.0.1",
     "react-scripts": "3.0.1",
+    "react-select": "^2.4.4",
     "react-tap-event-plugin": "^3.0.3",
     "reactstrap": "^8.0.0",
     "store": "^2.0.12"

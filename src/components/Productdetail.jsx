@@ -41,7 +41,7 @@ class Productdetail extends React.Component {
             prod: [],
             modal: false,
             activeTab: '1',
-
+  
             jumlah_lot: '',
 
 
@@ -98,10 +98,10 @@ class Productdetail extends React.Component {
         let { match: { params } } = this.props;
         e.preventDefault();
         Axios
-            // .post(`/transaction/${params.product_id}`,{
-            .post("https://binarplus-product-monggovest.herokuapp.com/transaction",
+            // .post(`/transaction/${params.transaction_id}`,{
+             .post(`https://binarplus-product-monggovest.herokuapp.com/transaction/`,{
 
-                {
+                    transaction_id:this.state.transaction_id,
                     jumlah_lot: this.state.jumlah_lot,
                     jumlah_harga: this.state.jumlah_harga
 
@@ -120,7 +120,7 @@ class Productdetail extends React.Component {
                     // localStorage.setItem('USER_ID', user.id)
                     // store.set('loggedIn', true);
                     alert('mohon segera lakukan pembayaran', response)
-                    this.props.history.push(`/transaction/${params.product_id}`)
+                    this.props.history.push(`/transaction/${params.product_id}/${params.transaction_id}`)
                     console.log(response)
 
 
