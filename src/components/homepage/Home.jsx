@@ -90,26 +90,32 @@ class Home extends React.Component {
 <div>
 
     <Row>
+   
         <Col className='d-flex'>
             {
-                this.state.productTop.map(prod =>
-
-                    <Col md='4' key={prod.product_id} >
-
+                this.state.productTop.slice(0, 3).map(prod =>
+          
+                    <Col md='4' key={prod.product_id}  >
+       <Link style={{textDecoration:'none', color:'black'}} to={`/productdetail/${prod.product_id}`}> 
                         <Card >
-                            <CardImg top width="100%" src={prod.foto} alt="Card image cap" />
+                            <CardImg top width="100%" height="200px" src={prod.foto} alt="Card image cap" />
+                        
                             <CardBody>
-                                <CardTitle>{prod.nama_product}</CardTitle>
-                                <CardSubtitle> Rp.{prod.price}</CardSubtitle>
+                                <CardTitle> {prod.nama_product}</CardTitle>
+                                <CardSubtitle> HARGA: Rp.{prod.price}</CardSubtitle>
                                 <CardText></CardText>
-                                <Link to={`/productdetail/${prod.product_id}`}> lihat detail</Link>
+                                
                             </CardBody>
+                           
                         </Card>
+                        </Link>
                     </Col>
                 )
             }
 
         </Col>
+
+      
     </Row>
 </div>
 

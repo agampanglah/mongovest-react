@@ -14,6 +14,7 @@ import UpDropzone from './common/AdminBody';
 import CmsAdmin from './components/admin/ProductAdmin';
 import Admin from './components/admin/'
 import HomeAdmin from './components/admin/';
+import TentangKami from './AboutUs';
 
 function AppRouter() {
   return (
@@ -23,9 +24,11 @@ function AppRouter() {
          
 
       <Switch>
+      <Route path ='/DetailAboutUs' component ={TentangKami} />
           <Route exact path='/'component ={Homepage}/>
           <Route path = '/login' component ={Login} />
           <Route path ='/register' component={Register}/>
+         
       </Switch>
           
       <Switch>
@@ -46,6 +49,7 @@ function AppRouter() {
 
 {/* page detail by id route */}
         
+      
          
            
      

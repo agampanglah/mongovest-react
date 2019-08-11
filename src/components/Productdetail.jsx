@@ -41,8 +41,8 @@ class Productdetail extends React.Component {
             prod: [],
             modal: false,
             activeTab: '1',
-  
-            jumlah_lot: '',
+            // transaction_id:'',
+            jumlah_lot: '0',
 
 
 
@@ -53,7 +53,7 @@ class Productdetail extends React.Component {
         this.handlercangeLot = this.handlercangeLot.bind(this);
         this.toggle = this.toggle.bind(this);
         this.toggle1 = this.toggle1.bind(this);
-
+        this.holdDetail=this.holdDetail.bind(this);
 
 
     }
@@ -66,7 +66,7 @@ class Productdetail extends React.Component {
             .get(`/product/${params.product_id}`)
             .then(ress => {
                 this.setState({ prod: ress.data });
-                console.log('detail product', ress.data)
+                // console.log('detail product', ress.data)
             })
     }
 
@@ -78,6 +78,7 @@ class Productdetail extends React.Component {
         let name = event.target.name;
         data[name] = value;
         this.setState(data)
+
     }
 
     toggle() {
@@ -99,7 +100,7 @@ class Productdetail extends React.Component {
         e.preventDefault();
         Axios
             // .post(`/transaction/${params.transaction_id}`,{
-             .post(`https://binarplus-product-monggovest.herokuapp.com/transaction/`,{
+             .post(`transaction/`,{
 
                     transaction_id:this.state.transaction_id,
                     jumlah_lot: this.state.jumlah_lot,
@@ -107,7 +108,7 @@ class Productdetail extends React.Component {
 
                 })
             .then((response) => {
-                if (response.status === 200) {
+                // //  if (response.status === 200) {
 
                     // localStorage.setItem("JWT_TOKEN", response.data.token)
 
@@ -119,12 +120,14 @@ class Productdetail extends React.Component {
 
                     // localStorage.setItem('USER_ID', user.id)
                     // store.set('loggedIn', true);
+                    
+                 
                     alert('mohon segera lakukan pembayaran', response)
                     this.props.history.push(`/transaction/${params.product_id}/${params.transaction_id}`)
                     console.log(response)
 
 
-                }
+                // }
             })
 
             .catch(function (error) {
@@ -137,6 +140,14 @@ class Productdetail extends React.Component {
 
     }
 
+    holdDetail(e) {
+        e.preventDefault();
+
+        alert("anda belum login, silahkan login terlebih dahulu")
+        this.props.history.push('/login')
+    }
+
+
     render() {
 
 
@@ -145,17 +156,16 @@ class Productdetail extends React.Component {
         let jumlah_lot = this.state.jumlah_lot
         const harga = this.state.prod.price
         const hargaTotal = (harga * jumlah_lot)
-
+        // let trx = this.state.trx
         let prod = this.state.prod
-
-
-        // localStorage.setItem("TOTAL_LOT", jumlah_lot)
-        // localStorage.setItem("HARGA_TOTAL", hargaTotal)
-        console.log(hargaTotal, 'harga total')
+        localStorage.setItem("jlm_lot", jumlah_lot)
+         localStorage.setItem("HARGA_TOTAL", hargaTotal)
+        //  console.log(hargaTotal, 'harga total')
 
         //  let go = <Link to={`/transaction/${this.state.prod.product_id}`}> Proses</Link>
-        let go = <Button color='info' onClick={this.sendDatalot}>proses</Button>
-        let hold = <Link to='/login' > Proses </Link>
+        let go = <Button color='info' onClick={this.sendDatalot}>lanjutkan</Button>
+        // let hold = <Link to='/login' > Proses </Link>
+        let hold =<Button color='info' onClick ={this.holdDetail}> lanjutkan</Button>
 
         if (IsLoggedIn()) {
             return (
@@ -226,9 +236,10 @@ class Productdetail extends React.Component {
                                             INVESTASI
                                     </ModalHeader>
                                         <ModalBody>
-                                            Tentukan Jumlah <br />
+                                       
                                             <Row>
-                                                <Col sm='3'>
+                                            <Label sm={1}> masukan lot </Label>
+                                                <Col sm='3' key={this.props.transaction_id}>
                                                     <Input
                                                         // id='lotInput'
                                                         type='number'
@@ -262,14 +273,10 @@ class Productdetail extends React.Component {
                                             </Row>
 
                                             <Row>
-                                                <Label sm={1}> harga lot </Label>
+                                                <Label sm={1}> harga </Label>
                                                 <Col sm={5}>
                                                     <Input
-
                                                         placeholder={prod.price}
-
-
-
                                                     >
                                                     </Input>
                                                 </Col>
@@ -308,14 +315,16 @@ class Productdetail extends React.Component {
 
                 <div>
 
+                    <div>
+
                     <AppHeader />
 
 
-                    <h2 style={{ textAlign: 'center' }} >PRODUCT DETAIL </h2>
+                    <h2 style={{ paddingTop: 30, textAlign: "center" }} >PRODUCT DETAIL </h2>
 
                     <div style={{ margin: '70px 0 0 0' }}>
                         <Container>
-                            <Row>
+                            <Row className="card-prod" >
                                 <Col>
                                     <Col md={12} >
 
@@ -331,10 +340,10 @@ class Productdetail extends React.Component {
                                         <NavItem>
                                             <NavLink
                                                 className={classnames({ active: this.state.activeTab === '1' })}
-                                                onClick={() => { this.toggle('1'); }}
+                                                onClick={() => { this.toggle1('1'); }}
                                             >
                                                 detail sapi
-                                         </NavLink>
+                                             </NavLink>
                                         </NavItem>
                                     </Nav>
                                     <TabContent activeTab={this.state.activeTab}>
@@ -345,7 +354,7 @@ class Productdetail extends React.Component {
                                                     <h4>{prod.nama_product}</h4>
                                                     <p> sapi yang terbuat dari rasa manis kasih sayang,
                                                         dengan dibesarkan seperti anak sendiri maka tercipatalah kebohayan
-                                                     bentuk yang eksotis dan praktis</p>
+                                                         bentuk yang eksotis dan praktis</p>
 
                                                     <h4> Rp. {prod.price}</h4>
                                                     <Button color='info' onClick={this.toggle}>lanjutkan</Button>
@@ -354,14 +363,13 @@ class Productdetail extends React.Component {
                                         </TabPane>
 
                                     </TabContent>
-
                                 </Col>
 
                             </Row>
 
                             {/* outside body taro modalnya jangan di dalem card body */}
 
-
+                            {/* <Button color='info' onClick={this.toggle}>lanjutkan</Button> */}
                             <Row>
                                 <Col>
                                     <Modal
@@ -371,39 +379,67 @@ class Productdetail extends React.Component {
                                     >
                                         <ModalHeader toggle={this.toggle}>
                                             INVESTASI
-                                </ModalHeader>
+                                    </ModalHeader>
                                         <ModalBody>
-                                            Tentukan Jumlah <br />
+                                       
                                             <Row>
-                                                <Col sm='3'>
+                                            <Label sm={1}> masukan lot </Label>
+                                                <Col sm='3' key={this.props.transaction_id}>
                                                     <Input
                                                         // id='lotInput'
                                                         type='number'
+                                                        name="jumlah_lot"
                                                         placeholder='0'
-                                                        value={this.state.jumlah_Lot}
+                                                        value={this.state.jumlah_lot}
                                                         onChange={this.handlercangeLot}
                                                     >
 
 
                                                     </Input>
+
                                                 </Col>
                                             </Row>
-                                            <a> harga per lot = Rp.{prod.price}</a><br />
-                                            <a> total harga = Rp {hargaTotal}</a><br />
+
+                                            <Row>
+                                                <Label sm={1}> harga total </Label>
+                                                <Col sm={5}>
+                                                    <Input
+
+                                                        type='jumlah_harga'
+                                                        name="jumlah_harga"
+                                                        value={hargaTotal}
+                                                        placeholder={hargaTotal}
+                                                        onChange={this.handlercangeLot}
+
+
+                                                    >
+                                                    </Input>
+                                                </Col>
+                                            </Row>
+
+                                            <Row>
+                                                <Label sm={1}> harga </Label>
+                                                <Col sm={5}>
+                                                    <Input
+                                                        placeholder={prod.price}
+                                                    >
+                                                    </Input>
+                                                </Col>
+                                            </Row>
+
+
+
                                         </ModalBody>
                                         <ModalFooter>
 
-                                            <Button onClick={this.toggle}>
-
-                                                {hold}
-
-                                            </Button>
+                                            {hold}
 
 
 
-                                            <Button onClick={this.toggle}>
+
+                                            <Button color="info" onClick={this.toggle}>
                                                 batalkan
-                                    </Button>
+                                        </Button>
                                         </ModalFooter>
 
                                     </Modal>
@@ -413,6 +449,8 @@ class Productdetail extends React.Component {
 
                     </div>
                     <AppFooter />
+                </div>
+ <AppFooter />
                 </div>
 
             )

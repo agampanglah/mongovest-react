@@ -131,7 +131,7 @@ class AppHeader extends React.Component {
 
 
                             <NavItem>
-                                <NavLink > <Link to='/DetailInvest'> <p className="text-white">Investasi</p></Link></NavLink>
+                                <NavLink > <Link to='#'> <p className="text-white">syarat dan ketentuan</p></Link></NavLink>
                             </NavItem>
 
                             <NavItem>

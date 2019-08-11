@@ -16,6 +16,8 @@ class Transaction extends Component {
             prods: [],
             trxs:[],
             users:[],
+            jumlah_harga:'',
+            jumlah_lot:''
           
           
         }
@@ -24,12 +26,18 @@ class Transaction extends Component {
 
     }
 
-    componentWillMount(){
+    sendTrx(){
         const { match: { params } } = this.props;
             Axios
-                .get(`/transaction/${params.transaction_id}`)
+                // .get(`/transaction/${params.transaction_id}`)
+                .get(`/transaction/${params.transaction_id}`)   
                     .then(response =>{
-                        this.setState({trxs: response.data})
+                        this.setState({
+                            trxs: response.data,
+                            // jumlah_lot : this.state.jumlah_lot,
+                            // jumlah_harga: this.state.jumlah_harga,
+                            
+                        })
                         console.log(response.data,"id transaction")
                     })
     }
@@ -39,7 +47,7 @@ class Transaction extends Component {
 
         Axios
             .get(`/product/${params.product_id}`)
-            .then(ress => {
+                .then(ress => {
                 this.setState({ prods: ress.data });
                 console.log('product di transaction', ress.data)
             })
@@ -57,6 +65,7 @@ class Transaction extends Component {
             <div>
              
                 <AppHeader />
+                
                 <h2 style={{ paddingTop: 30, textAlign: "center" }} >TRANSACTION </h2>
                 <Container>
                     <Form>
@@ -93,7 +102,7 @@ class Transaction extends Component {
                                     type='text'
                                     className="form-control"
                                     value=""
-                                    placeholder={trxs.jumlah_lot}
+                                    placeholder={localStorage.getItem("jlm_lot")}
                                    
 
                                 >
@@ -108,7 +117,7 @@ class Transaction extends Component {
                                     disabled={true}
                                     type='text'
                                     className="form-control"
-                                    value=""
+                                    value={localStorage.getItem("HARGA_TOTAL")}
                                     // placeholder={"Rp. " + hargatotal}
                                     onChange=""
 
@@ -141,6 +150,16 @@ class Transaction extends Component {
                                 </Input>
                             </Col>
                         </FormGroup>
+
+                        <FormGroup check row>
+              <Label check sm={4}>
+                <Col sm={10}>
+                  <Button type="submit" size="lg" color="info" >
+                    proses
+                  </Button>
+                </Col>
+              </Label>
+            </FormGroup>
 
                     </Form>
                 </Container>

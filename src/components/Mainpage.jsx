@@ -7,6 +7,7 @@ import {
 import { Link, Redirect } from 'react-router-dom';
 import Axios from 'axios';
 import IsLoggedIn from '../helpers/IsLoggedIn';
+import AppFooter from '../common/AppFooter';
 
 Axios.defaults.baseURL = 'https://binarplus-product-monggovest.herokuapp.com'
 
@@ -23,14 +24,14 @@ class Mainpage extends Component {
             .get('/product')
             .then(ress => {
                 this.setState({ product: ress.data });
-                console.log('data product dari axios', ress.data)
+                // console.log('data product dari axios', ress.data)
             })
     }
 
     render() {
 
-        if(!IsLoggedIn()){
-            return <Redirect to = '/' />
+        if (!IsLoggedIn()) {
+            return <Redirect to='/' />
         }
 
         console.log('data product di render', this.state.product)
@@ -47,21 +48,22 @@ class Mainpage extends Component {
                 <div>
 
                     <Row className="card" >
-                        <Col className="card-flex" >
+                        <Col className="d-flex" >
                             {
                                 this.state.product.slice(0, 3).map(prod =>
 
                                     <Col md='4' key={prod.product_id} >
+                                        <Link style={{ textDecoration: 'none', color: 'black' }} to={`/productdetail/${prod.product_id}`}>
+                                            <Card >
+                                                <CardImg top width="100%" height="200px" src={prod.foto} alt="Card image cap" />
+                                                <CardBody>
+                                                    <CardTitle>{prod.nama_product}</CardTitle>
+                                                    <CardSubtitle> Rp.{prod.price}</CardSubtitle>
+                                                    <CardText></CardText>
 
-                                        <Card >
-                                            <CardImg top width="100%" src={prod.foto} alt="Card image cap" />
-                                            <CardBody>
-                                                <CardTitle>{prod.nama_product}</CardTitle>
-                                                <CardSubtitle> Rp.{prod.price}</CardSubtitle>
-                                                <CardText></CardText>
-                                                <Link to={`/productdetail/${prod.product_id}`}> lihat detail</Link>
-                                            </CardBody>
-                                        </Card>
+                                                </CardBody>
+                                            </Card>
+                                        </Link>
                                     </Col>
                                 )
                             }
@@ -71,31 +73,36 @@ class Mainpage extends Component {
                 </div>
 
                 <div>
-                    <h2 style={{ textAlign: 'center' }} >semua product investasi</h2>
-                    <Row>
-                        <Col className='d-flex'>
-                            {
-                                this.state.product.slice(4).map(loadmore =>
+                    <Col>
+                        <h2 style={{ textAlign: 'center' }} >semua product investasi</h2>
+                    </Col>
+                    <div>
+                        <Row className="Card">
+                            <Col className='d-flex'>
+                                {
+                                    this.state.product.slice(2, 9).map(loadmore =>
 
-                                    <Col md='6' key={loadmore.product_id} >
+                                        <Col md='4' key={loadmore.product_id} >
+                                            <Link style={{ textDecoration: 'none', color: 'black' }} to={`/productdetail/${loadmore.product_id}`}>
+                                                <Card >
+                                                    <CardImg top width="100%" height="200px" src={loadmore.foto} alt="Card image cap" />
+                                                    <CardBody>
+                                                        <CardTitle>{loadmore.nama_product}</CardTitle>
+                                                        <CardSubtitle> Rp.{loadmore.price}</CardSubtitle>
+                                                        <CardText></CardText>
 
-                                        <Card >
-                                            <CardImg top width="100%" src={loadmore.foto} alt="Card image cap" />
-                                            <CardBody>
-                                                <CardTitle>{loadmore.nama_product}</CardTitle>
-                                                <CardSubtitle> Rp.{loadmore.price}</CardSubtitle>
-                                                <CardText></CardText>
-                                                <Link to={`/productdetail/${loadmore.product_id}`}> lihat detail</Link>
-                                            </CardBody>
-                                        </Card>
-                                    </Col>
-                                )
-                            }
+                                                    </CardBody>
+                                                </Card>
+                                            </Link>
+                                        </Col>
+                                    )
+                                }
 
-                        </Col>
-                    </Row>
+                            </Col>
+                        </Row>
+                    </div>
                 </div>
-
+<AppFooter />
             </div>
         )
     }

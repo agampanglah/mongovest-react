@@ -8,15 +8,16 @@ import {Link } from 'react-router-dom';
       render(){
           return(
             <div >
-           
-            <Card style = {{marginTop:'20px'}}>
+            <Link to={`/productdetail/${this.props.product_id}`}> 
+            <Card style = {{marginTop:'20px'}} >
               <CardImg top width="100%" src={this.props.image} alt="" />
               <CardBody>
                 <CardTitle>{this.props.title}</CardTitle>
                 <CardSubtitle>{this.props.harga}</CardSubtitle>
-                <Link to={`/productdetail/${this.props.product_id}`}> lihat detail</Link>
+               
               </CardBody>
             </Card>
+            </Link>
           
           </div>
           

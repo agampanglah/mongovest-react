@@ -33,7 +33,7 @@ class Login extends React.Component {
 
         this.changeEmail = this.changeEmail.bind(this);
         this.changePassword = this.changePassword.bind(this);
-        this.changeUsername = this.changeUsername.bind(this);
+         this.changeUsername = this.changeUsername.bind(this);
         this.submitLogin = this.submitLogin.bind(this);
 
 
@@ -95,7 +95,7 @@ class Login extends React.Component {
         this.setState({
             email: '',
             password: '',
-            username: '',
+             username: '',
         })
     }
 
@@ -103,10 +103,10 @@ class Login extends React.Component {
         console.log('id', localStorage.getItem('USER_ID'))
         // console.log(IsLoggedIn())
 
-    let username=this.state.username
+    let email=this.state.email
     let password=this.state.password
        
-        if (username === 'admin' && password==='adminadmin') {
+        if (email === 'admin@gmail.com' && password==='adminadmin') {
             return (
                 <Redirect to='/cms/admin' />
             )
